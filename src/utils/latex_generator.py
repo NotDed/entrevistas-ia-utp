@@ -38,6 +38,57 @@ def escapar_latex(texto: str) -> str:
     return texto
 
 
+def procesar_formato_en_linea(texto: str) -> str:
+    """
+    Procesa una línea de texto: primero escapa caracteres especiales,
+    luego convierte negritas e itálicas de Markdown a LaTeX.
+    
+    El orden es importante:
+    1. Identificar negritas/itálicas y extraerlas
+    2. Escapar el texto normal
+    3. Reconstruir con comandos LaTeX
+    """
+    if not texto:
+        return ""
+    
+    resultado = []
+    i = 0
+    
+    while i < len(texto):
+        # Buscar negritas **texto**
+        if texto[i:i+2] == '**':
+            # Buscar cierre
+            cierre = texto.find('**', i+2)
+            if cierre != -1:
+                contenido = texto[i+2:cierre]
+                resultado.append(f'\\textbf{{{escapar_latex(contenido)}}}')
+                i = cierre + 2
+                continue
+        
+        # Buscar itálicas *texto* (no precedidas por *)
+        if texto[i] == '*' and (i == 0 or texto[i-1] != '*') and (i+1 < len(texto) and texto[i+1] != '*'):
+            # Buscar cierre (un solo *)
+            cierre = -1
+            for j in range(i+1, len(texto)):
+                if texto[j] == '*' and (j+1 >= len(texto) or texto[j+1] != '*'):
+                    cierre = j
+                    break
+            if cierre != -1:
+                contenido = texto[i+1:cierre]
+                resultado.append(f'\\textit{{{escapar_latex(contenido)}}}')
+                i = cierre + 1
+                continue
+        
+        # Caracter normal - acumular para escapar después
+        # Buscar hasta el próximo * o fin de línea
+        inicio = i
+        while i < len(texto) and texto[i] != '*':
+            i += 1
+        resultado.append(escapar_latex(texto[inicio:i]))
+    
+    return ''.join(resultado)
+
+
 def markdown_a_latex(markdown: str) -> str:
     """
     Convierte Markdown básico a LaTeX.
@@ -103,9 +154,9 @@ def markdown_a_latex(markdown: str) -> str:
                 latex_lines.append(r'\begin{itemize}')
                 in_itemize = True
             contenido = line.strip()[2:]
-            # Procesar negritas dentro del item
-            contenido = re.sub(r'\*\*(.+?)\*\*', r'\\textbf{\1}', contenido)
-            latex_lines.append(f'  \\item {escapar_latex(contenido)}')
+            # Primero escapar, luego procesar negritas
+            contenido = procesar_formato_en_linea(contenido)
+            latex_lines.append(f'  \\item {contenido}')
             continue
         
         # Si estábamos en lista y ya no es item, cerrar
@@ -113,22 +164,8 @@ def markdown_a_latex(markdown: str) -> str:
             latex_lines.append(r'\end{itemize}')
             in_itemize = False
         
-        # Negritas **texto**
-        line = re.sub(r'\*\*(.+?)\*\*', r'\\textbf{\1}', line)
-        
-        # Itálicas *texto*
-        line = re.sub(r'(?<!\*)\*([^*]+)\*(?!\*)', r'\\textit{\1}', line)
-        
-        # Escapar el resto
-        # Pero primero proteger los comandos LaTeX ya insertados
-        partes = re.split(r'(\\textbf\{[^}]+\}|\\textit\{[^}]+\})', line)
-        resultado = []
-        for parte in partes:
-            if parte.startswith('\\textbf{') or parte.startswith('\\textit{'):
-                resultado.append(parte)
-            else:
-                resultado.append(escapar_latex(parte))
-        line = ''.join(resultado)
+        # Procesar formato en línea (negritas, itálicas) con escape correcto
+        line = procesar_formato_en_linea(line)
         
         latex_lines.append(line)
     
@@ -290,8 +327,8 @@ def compilar_pdf(ruta_tex: str, output_dir: str) -> str:
     ruta_pdf = os.path.join(output_dir, f"{nombre_base}.pdf")
     
     if os.path.exists(ruta_pdf):
-        # Limpiar archivos auxiliares
-        for ext in ['.aux', '.log', '.out', '.toc']:
+        # Limpiar archivos auxiliares (incluyendo .tex)
+        for ext in ['.aux', '.log', '.out', '.toc', '.tex']:
             aux_file = os.path.join(output_dir, f"{nombre_base}{ext}")
             if os.path.exists(aux_file):
                 os.remove(aux_file)
@@ -312,7 +349,7 @@ def compilar_pdf(ruta_tex: str, output_dir: str) -> str:
 
 
 def guardar_latex_y_pdf(contenido_md: str, nombre_entrevistado: str, 
-                         output_dir: str, tipo: str = "detallado") -> tuple:
+                         output_dir: str, tipo: str = "detallado") -> str:
     """
     Genera el archivo LaTeX y lo compila a PDF.
     
@@ -323,16 +360,16 @@ def guardar_latex_y_pdf(contenido_md: str, nombre_entrevistado: str,
         tipo: "detallado" o "narrativo".
         
     Returns:
-        Tupla (ruta_tex, ruta_pdf).
+        Ruta al PDF generado.
     """
     # Generar LaTeX
     latex = generar_latex_reporte(contenido_md, nombre_entrevistado, tipo)
     
-    # Nombres de archivo
+    # Nombres de archivo (simplificados sin nombre del entrevistado)
     if tipo == "narrativo":
-        nombre_base = f"{nombre_entrevistado}_perfil"
+        nombre_base = "perfil"
     else:
-        nombre_base = f"{nombre_entrevistado}_reporte"
+        nombre_base = "reporte"
     
     ruta_tex = os.path.join(output_dir, f"{nombre_base}.tex")
     
@@ -343,4 +380,4 @@ def guardar_latex_y_pdf(contenido_md: str, nombre_entrevistado: str,
     # Compilar a PDF
     ruta_pdf = compilar_pdf(ruta_tex, output_dir)
     
-    return ruta_tex, ruta_pdf
+    return ruta_pdf

@@ -43,14 +43,18 @@ def procesar_transcripcion(
     Args:
         ruta_archivo: Ruta al archivo de transcripción.
         integrador: Instancia del agente integrador.
-        output_dir: Directorio donde guardar el reporte.
+        output_dir: Directorio base donde guardar el reporte.
         paralelo: Si True, ejecuta agentes en paralelo.
         verbose: Si True, muestra progreso.
         
     Returns:
-        Tupla con rutas a los archivos de reporte generados (detallado, narrativo).
+        Tupla con rutas a los archivos PDF generados (detallado, narrativo).
     """
     nombre_entrevistado = extraer_nombre_entrevistado(ruta_archivo)
+    
+    # Crear carpeta individual para este entrevistado
+    carpeta_entrevistado = os.path.join(output_dir, nombre_entrevistado)
+    os.makedirs(carpeta_entrevistado, exist_ok=True)
     
     if verbose:
         print(f"\n{'='*60}")
@@ -74,47 +78,35 @@ def procesar_transcripcion(
         verbose=verbose
     )
     
-    # Guardar reporte detallado (Markdown)
-    nombre_detallado = f"{nombre_entrevistado}_reporte.md"
-    ruta_detallado = os.path.join(output_dir, nombre_detallado)
-    guardar_reporte(reportes['detallado'], ruta_detallado)
-    
-    # Guardar reporte narrativo (Markdown)
-    nombre_narrativo = f"{nombre_entrevistado}_perfil.md"
-    ruta_narrativo = os.path.join(output_dir, nombre_narrativo)
-    guardar_reporte(reportes['narrativo'], ruta_narrativo)
-    
-    # Generar PDFs con LaTeX
+    # Generar PDFs con LaTeX (directamente, sin guardar MD)
     if verbose:
         print(f"\n  Generando PDFs con LaTeX...")
     
     try:
-        _, ruta_pdf_detallado = guardar_latex_y_pdf(
+        ruta_pdf_detallado = guardar_latex_y_pdf(
             reportes['detallado'], 
             nombre_entrevistado, 
-            output_dir, 
+            carpeta_entrevistado, 
             tipo="detallado"
         )
-        _, ruta_pdf_narrativo = guardar_latex_y_pdf(
+        ruta_pdf_narrativo = guardar_latex_y_pdf(
             reportes['narrativo'], 
-            nombre_entrevistado, 
-            output_dir, 
+            nombre_entrevistado,
+            carpeta_entrevistado, 
             tipo="narrativo"
         )
         
         if verbose:
             print(f"  ✓ PDF detallado: {ruta_pdf_detallado}")
             print(f"  ✓ PDF narrativo: {ruta_pdf_narrativo}")
+        
+        return (ruta_pdf_detallado, ruta_pdf_narrativo)
     except Exception as e:
         if verbose:
             print(f"  ⚠ Error generando PDFs: {e}")
-            print(f"    Los archivos Markdown se guardaron correctamente.")
-    
-    if verbose:
-        print(f"\n  ✓ Markdown detallado: {ruta_detallado}")
-        print(f"  ✓ Markdown narrativo: {ruta_narrativo}")
-    
-    return (ruta_detallado, ruta_narrativo)
+            import traceback
+            traceback.print_exc()
+        raise
 
 
 def main():
@@ -236,10 +228,12 @@ Ejemplos:
         print("  RESUMEN")
         print("="*60)
         print(f"\nEntrevistas procesadas: {len(reportes_generados)}/{len(archivos)}")
-        print(f"Reportes generados por entrevista: 2 (detallado + perfil narrativo)")
+        print(f"PDFs generados por entrevista: 2 (reporte.pdf + perfil.pdf)")
         for ruta_detallado, ruta_narrativo in reportes_generados:
-            nombre = os.path.basename(ruta_detallado).replace('_reporte.md', '')
-            print(f"\n  {nombre}:")
+            # Extraer nombre de la carpeta padre
+            carpeta = os.path.dirname(ruta_detallado)
+            nombre = os.path.basename(carpeta)
+            print(f"\n  {nombre}/")
             print(f"    ✓ {os.path.basename(ruta_detallado)}")
             print(f"    ✓ {os.path.basename(ruta_narrativo)}")
         print()
