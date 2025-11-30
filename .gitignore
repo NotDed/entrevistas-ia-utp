@@ -24,5 +24,6 @@ dist/
 .DS_Store
 Thumbs.db
 
-# Outputs (opcional - comentar si quieres versionar los reportes)
-# data/outputs/
+# Datos de entrada y salida (no versionar)
+data/raw/*.txt
+data/outputs/
