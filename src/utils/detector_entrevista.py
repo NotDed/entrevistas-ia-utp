@@ -146,12 +146,29 @@ def detectar_tipo_entrevista(transcripcion: str, nombre_archivo: str = "") -> In
                 area_detectada = match.group(1).strip()
                 break
     
-    # Determinar si es grupal
-    es_grupal = (
-        indicadores_grupal >= 3 or
-        menciones_nosotros > menciones_yo * 0.5 or
-        len(hablantes_unicos) > 2
-    )
+    # Determinar si es grupal - ser muy estricto
+    # Priorizar el nombre del archivo como indicador principal
+    es_grupal = False
+    
+    # Verificar si el nombre del archivo indica grupo claramente
+    if nombre_archivo:
+        nombre_lower = nombre_archivo.lower()
+        # Palabras clave que indican entrevista grupal
+        palabras_grupal = ['equipo', 'grupo', 'área', 'dependencia', 'observatorio', 
+                          'gtsi', 'vicerrectoría', 'vicerrectoria', 'decanatura',
+                          'oficina', 'centro', 'unidad']
+        if any(x in nombre_lower for x in palabras_grupal):
+            es_grupal = True
+        # Si tiene "y" o "&" entre nombres, es grupal
+        elif re.search(r'\s+y\s+|\s*&\s*', nombre_archivo):
+            es_grupal = True
+    
+    # Solo usar indicadores de texto si son muy claros
+    if not es_grupal:
+        es_grupal = (
+            len(hablantes_unicos) > 4 or  # Muchos hablantes identificados claramente
+            (menciones_nosotros > 50 and menciones_nosotros > menciones_yo * 3)  # Predominio muy claro
+        )
     
     # Extraer nombres del archivo o transcripción
     nombres = []
