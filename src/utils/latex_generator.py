@@ -108,36 +108,41 @@ def markdown_a_latex(markdown: str) -> str:
             latex_lines.append('')
             continue
         
-        # Headers
-        if line.startswith('# '):
+        # Headers - orden de más específico a menos específico
+        if line.startswith('##### '):
             if in_itemize:
                 latex_lines.append(r'\end{itemize}')
                 in_itemize = False
-            # Título principal - ya manejado en el template
-            continue
-        elif line.startswith('### '):
-            if in_itemize:
-                latex_lines.append(r'\end{itemize}')
-                in_itemize = False
-            titulo = line[4:].strip()
-            # El título ya tiene su propia numeración, usar section* (sin numerar)
-            latex_lines.append(f'\\subsection*{{{escapar_latex(titulo)}}}')
+            titulo = line[6:].strip()
+            # Nivel 5: párrafo con título en negrita
+            latex_lines.append(f'\\paragraph*{{{escapar_latex(titulo)}}}')
             continue
         elif line.startswith('#### '):
             if in_itemize:
                 latex_lines.append(r'\end{itemize}')
                 in_itemize = False
             titulo = line[5:].strip()
-            # Usar subsubsection* sin numeración automática
             latex_lines.append(f'\\subsubsection*{{{escapar_latex(titulo)}}}')
+            continue
+        elif line.startswith('### '):
+            if in_itemize:
+                latex_lines.append(r'\end{itemize}')
+                in_itemize = False
+            titulo = line[4:].strip()
+            latex_lines.append(f'\\subsection*{{{escapar_latex(titulo)}}}')
             continue
         elif line.startswith('## '):
             if in_itemize:
                 latex_lines.append(r'\end{itemize}')
                 in_itemize = False
             titulo = line[3:].strip()
-            # Usar section* sin numeración automática
             latex_lines.append(f'\\section*{{{escapar_latex(titulo)}}}')
+            continue
+        elif line.startswith('# '):
+            if in_itemize:
+                latex_lines.append(r'\end{itemize}')
+                in_itemize = False
+            # Título principal - ya manejado en el template
             continue
         
         # Línea horizontal
