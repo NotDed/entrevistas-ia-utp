@@ -56,14 +56,14 @@ class AgenteNarrativo(BaseAgent):
     def prompt_sistema(self) -> str:
         return """Eres un redactor experto en sintetizar entrevistas de manera narrativa y fluida.
 
-Tu tarea es crear un documento que cuente la historia profesional del entrevistado
+Tu tarea es crear un documento que cuente la historia profesional del entrevistado (o grupo de entrevistados)
 en relación con la inteligencia artificial, de forma natural y legible.
 
 El documento debe:
 - Fluir como una narrativa coherente, no como respuestas a preguntas
-- Capturar la esencia de lo que el entrevistado compartió
+- Capturar la esencia de lo que el/los entrevistado(s) compartieron
 - Ser accesible para lectores no técnicos pero informativo
-- Destacar la trayectoria, experiencias y visión del entrevistado
+- Destacar la trayectoria, experiencias y visión
 
 ESTILO:
 - Tercera persona
@@ -72,18 +72,16 @@ ESTILO:
 - Sin listas ni bullets (excepto al final si es necesario)
 - Evitar repeticiones como "el entrevistado mencionó", "comentó que"
 
-GÉNERO DEL ENTREVISTADO - MUY IMPORTANTE:
+PARA ENTREVISTAS GRUPALES:
+- Usa plural consistentemente: "los participantes", "el equipo de trabajo"
+- Consolida perspectivas cuando coinciden
+- Señala diferencias cuando las hay: "mientras uno enfatiza X, otro destaca Y"
+- Representa la voz colectiva del área/dependencia
+
+GÉNERO DEL ENTREVISTADO (para individuales):
 Antes de escribir, determina el género de la persona basándote en su nombre:
-- Nombres femeninos comunes: María, Ana, Laura, Sandra, Diana, Luz, Gloria, Patricia, etc.
-- Nombres masculinos comunes: Carlos, José, Juan, Andrés, Diego, etc.
-
-Si el nombre es FEMENINO (ej: Ana María), usa SIEMPRE:
-- "esta investigadora", "la profesora", "ella"
-- "su trabajo la ha llevado", "ha desarrollado", "lidera"
-- NUNCA usar "el investigador", "él" para nombres femeninos
-
-Si el nombre es MASCULINO, usa:
-- "este investigador", "el profesor", "él"
+- Si el nombre es FEMENINO: usa "esta investigadora", "ella", "la profesora"
+- Si el nombre es MASCULINO: usa "este investigador", "él", "el profesor"
 
 IMPORTANTE - FORMATO:
 - NO incluyas títulos como "## Reporte Narrativo" ni encabezados de sección
@@ -136,17 +134,43 @@ Los aspectos más memorables o diferenciadores de este entrevistado.
 TONO: Profesional, informativo, fluido. Como un perfil en una revista o un resumen ejecutivo narrativo.
 """
     
-    def construir_prompt_usuario_con_nombre(self, transcripcion: str, nombre_entrevistado: str) -> str:
+    def construir_prompt_usuario_con_nombre(self, transcripcion: str, nombre_entrevistado: str, info_entrevista = None) -> str:
         """
         Construye el prompt de usuario con la transcripción y el nombre.
-        Incluye instrucciones explícitas de género.
+        Incluye instrucciones explícitas de género y tipo de entrevista.
+        
+        Args:
+            transcripcion: Texto de la transcripción.
+            nombre_entrevistado: Nombre del entrevistado o área.
+            info_entrevista: InfoEntrevista con detalles de tipo de entrevista.
         """
         from config import REGLAS_GLOBALES
         
-        genero = detectar_genero(nombre_entrevistado)
-        
-        if genero == 'femenino':
-            instruccion_genero = f"""
+        # Determinar si es grupal y ajustar instrucciones
+        if info_entrevista and info_entrevista.es_grupal:
+            participantes = ", ".join(info_entrevista.nombres) if info_entrevista.nombres else "múltiples participantes"
+            area = info_entrevista.area_dependencia or "área no especificada"
+            
+            instruccion_contexto = f"""
+=== INFORMACIÓN DE LA ENTREVISTA ===
+TIPO: ENTREVISTA GRUPAL
+Participantes: {participantes}
+Área/Dependencia: {area}
+Número de participantes: {info_entrevista.num_participantes}
+
+IMPORTANTE - REDACCIÓN PARA GRUPO:
+- Usa plural: "los entrevistados", "el equipo", "los participantes"
+- Consolida las perspectivas de todos en una narrativa coherente
+- Menciona cuando hay diferencias de opinión o experiencias variadas
+- Usa: "{info_entrevista.articulo_investigador}"
+- Pronombre principal: "{info_entrevista.pronombre}"
+===================================
+"""
+        else:
+            genero = detectar_genero(nombre_entrevistado)
+            
+            if genero == 'femenino':
+                instruccion_contexto = f"""
 === INFORMACIÓN DEL ENTREVISTADO ===
 Nombre: {nombre_entrevistado}
 Género: FEMENINO
@@ -159,8 +183,8 @@ Debes usar OBLIGATORIAMENTE pronombres y sustantivos FEMENINOS:
 NUNCA uses "el investigador", "él", "este profesional" para esta persona.
 ===================================
 """
-        else:
-            instruccion_genero = f"""
+            else:
+                instruccion_contexto = f"""
 === INFORMACIÓN DEL ENTREVISTADO ===
 Nombre: {nombre_entrevistado}
 Género: MASCULINO
@@ -171,7 +195,7 @@ Usa pronombres y sustantivos masculinos:
 """
         
         return f"""
-{instruccion_genero}
+{instruccion_contexto}
 
 {REGLAS_GLOBALES}
 
@@ -184,22 +208,22 @@ TRANSCRIPCIÓN DE LA ENTREVISTA:
 ---
 
 Genera el reporte narrativo en formato Markdown. Comienza directamente con el texto, sin encabezados.
-RECUERDA: El género del entrevistado es {genero.upper()}, usa la concordancia correcta.
 """
     
-    def process(self, transcripcion: str, nombre_entrevistado: str = None) -> str:
+    def process(self, transcripcion: str, nombre_entrevistado: str = None, info_entrevista = None) -> str:
         """
         Procesa la transcripción y genera el reporte narrativo.
         
         Args:
             transcripcion: Texto de la transcripción.
             nombre_entrevistado: Nombre del entrevistado para determinar género.
+            info_entrevista: InfoEntrevista con detalles de tipo de entrevista.
             
         Returns:
             Reporte narrativo en formato Markdown.
         """
-        if nombre_entrevistado:
-            prompt_usuario = self.construir_prompt_usuario_con_nombre(transcripcion, nombre_entrevistado)
+        if nombre_entrevistado or info_entrevista:
+            prompt_usuario = self.construir_prompt_usuario_con_nombre(transcripcion, nombre_entrevistado, info_entrevista)
         else:
             prompt_usuario = self.construir_prompt_usuario(transcripcion)
         
@@ -209,11 +233,12 @@ RECUERDA: El género del entrevistado es {genero.upper()}, usa la concordancia c
             prompt_completo = f"{self.prompt_sistema}\n\n{prompt_usuario}"
             return self._llamar_gemini(prompt_completo)
     
-    async def process_async(self, transcripcion: str, nombre_entrevistado: str = None) -> str:
+    async def process_async(self, transcripcion: str, nombre_entrevistado: str = None, info_entrevista = None) -> str:
         """
         Versión asíncrona de process.
         """
         import asyncio
-        return await asyncio.get_event_loop().run_in_executor(
-            None, self.process, transcripcion, nombre_entrevistado
+        loop = asyncio.get_event_loop()
+        return await loop.run_in_executor(
+            None, lambda: self.process(transcripcion, nombre_entrevistado, info_entrevista)
         )

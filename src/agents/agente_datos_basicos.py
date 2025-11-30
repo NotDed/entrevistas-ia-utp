@@ -27,6 +27,7 @@ IMPORTANTE:
 - Solo incluye información que SÍ aparece en la transcripción.
 - EVITA información obvia o implícita como "participó en la entrevista" o "es entrevistado".
 - Ve directo al contenido sustantivo.
+- Si es una ENTREVISTA GRUPAL, lista todos los participantes identificados.
 
 Mantén un tono formal y conciso."""
     
@@ -37,6 +38,11 @@ INSTRUCCIONES PARA LA SECCIÓN "I. Datos básicos del entrevistado":
 
 El nombre del entrevistado se proporciona. Extrae SOLO: rol/cargo, facultad, grupo de investigación, programa académico y área de especialización.
 
+Si es ENTREVISTA GRUPAL:
+- Lista cada participante identificado
+- Incluye el área/dependencia que representan
+- Menciona roles individuales si se identifican
+
 EVITAR frases como:
 - "El entrevistado participó en..."
 - "Durante la entrevista mencionó..."
@@ -45,15 +51,29 @@ EVITAR frases como:
 FORMATO: Un párrafo breve y directo con los datos concretos.
 """
     
-    def process(self, transcripcion: str, nombre_entrevistado: str = None) -> str:
+    def process(self, transcripcion: str, nombre_entrevistado: str = None, info_entrevista = None) -> str:
         """
         Procesa la transcripción incluyendo el nombre del entrevistado.
+        
+        Args:
+            transcripcion: Texto de la transcripción (puede incluir contexto).
+            nombre_entrevistado: Nombre del entrevistado o área.
+            info_entrevista: InfoEntrevista con detalles de tipo de entrevista.
         """
         import time
         from config import REGLAS_GLOBALES
         
         max_retries = 3
-        nombre_info = f"\nNOMBRE DEL ENTREVISTADO: {nombre_entrevistado}\n" if nombre_entrevistado else ""
+        
+        # Construir información del encabezado según tipo de entrevista
+        if info_entrevista and info_entrevista.es_grupal:
+            nombre_info = f"""
+TIPO DE ENTREVISTA: GRUPAL
+PARTICIPANTES: {', '.join(info_entrevista.nombres)}
+ÁREA/DEPENDENCIA: {info_entrevista.area_dependencia or 'No especificada'}
+"""
+        else:
+            nombre_info = f"\nNOMBRE DEL ENTREVISTADO: {nombre_entrevistado}\n" if nombre_entrevistado else ""
         
         prompt_usuario = f"""{REGLAS_GLOBALES}
 {nombre_info}
