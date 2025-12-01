@@ -75,6 +75,7 @@ REGLAS IMPORTANTES:
 - Presenta los hallazgos como descubrimientos del análisis institucional
 - Si múltiples fuentes mencionan lo mismo, preséntalo como hallazgo consolidado
 - Solo incluye información que SÍ fue mencionada, no inventes datos
+- EVITA REDUNDANCIAS: No repitas la misma información, tecnología o concepto múltiples veces
 
 ESTILO DE REDACCIÓN - MUY IMPORTANTE:
 - Escribe de forma NARRATIVA y FLUIDA, como un informe profesional bien redactado
@@ -85,6 +86,7 @@ ESTILO DE REDACCIÓN - MUY IMPORTANTE:
 - Menciona logros colectivos y capacidades de los equipos
 - Usa un tono profesional pero cercano, que valore el trabajo realizado
 - Usa **negritas** para términos clave y nombres de grupos/tecnologías
+- Cada elemento (tecnología, herramienta, grupo) debe mencionarse UNA SOLA VEZ en la sección
 
 FORMATO DE SALIDA:
 - Usa Markdown con jerarquía de encabezados (##, ###, ####)

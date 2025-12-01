@@ -41,46 +41,40 @@ Escribe de forma narrativa, contextualizando las tecnologías con su uso."""
         return """
 INSTRUCCIONES PARA LA SECCIÓN "III. Ecosistema de Software y Herramientas":
 
+IMPORTANTE: NO repitas tecnologías en múltiples subsecciones. Cada herramienta debe mencionarse UNA SOLA VEZ en la subsección más apropiada.
+
 Comienza con un párrafo que presente la diversidad tecnológica del ecosistema de IA en la UTP.
 
-### 3.1 Lenguajes de Programación
-Narra cuáles son los lenguajes preferidos y por qué:
-- **Python** como lenguaje predominante y sus aplicaciones
-- Otros lenguajes utilizados (R, MATLAB, Julia, etc.)
-- Contextos de uso de cada lenguaje
+### 3.1 Stack Tecnológico Principal
+Presenta de forma integrada el conjunto de tecnologías base:
+- Lenguaje principal (**Python**) y otros lenguajes complementarios (R, MATLAB, Julia)
+- Ecosistema de librerías científicas: NumPy, Pandas, Matplotlib, etc.
+- Contexto de uso y nivel de adopción
 
-### 3.2 Frameworks de Machine Learning y Deep Learning
-Describe las herramientas de ML/DL adoptadas:
-- Frameworks principales: **TensorFlow**, **PyTorch**, **Keras**
-- Bibliotecas de ML clásico: scikit-learn, XGBoost
-- Razones de preferencia de los equipos
+### 3.2 Frameworks de Machine Learning
+Describe ÚNICAMENTE las herramientas de ML/DL (sin repetir librerías de datos):
+- Deep Learning: **TensorFlow**, **PyTorch**, **Keras**
+- ML clásico: scikit-learn, XGBoost, LightGBM
+- Razones de preferencia según el tipo de proyecto
 
-Usa bullet points para listar frameworks específicos.
+### 3.3 Plataformas y Entornos
+Describe los ambientes de trabajo y plataformas cloud:
+- Entornos de desarrollo (Jupyter, VS Code, Colab)
+- Plataformas cloud (AWS, Google Cloud, Azure)
+- Herramientas de versionado y MLOps
 
-### 3.3 Herramientas de Datos y Visualización
-Explica cómo los equipos manejan sus datos:
-- Bibliotecas de manipulación (Pandas, NumPy)
-- Herramientas de visualización
-- Bases de datos utilizadas
-
-### 3.4 Plataformas y Entornos de Desarrollo
-Describe los ambientes de trabajo:
-- Entornos de desarrollo (Jupyter, VS Code)
-- Plataformas de experimentación
-- Herramientas de versionado y colaboración
-
-### 3.5 Modelos y Recursos Preentrenados
+### 3.4 Modelos Preentrenados y LLMs
 Detalla el uso de modelos existentes:
-- Modelos de lenguaje (GPT, BERT, LLaMA)
-- Repositorios utilizados (Hugging Face)
-- Estrategias de fine-tuning
+- Modelos de lenguaje utilizados (GPT, BERT, LLaMA, Whisper)
+- Repositorios y fuentes (Hugging Face, OpenAI)
+- Estrategias de fine-tuning y adaptación
 
-### 3.6 Software Especializado por Área
-Identifica herramientas específicas según el dominio:
-- Visión por computador
-- Procesamiento de lenguaje natural
+### 3.5 Herramientas Especializadas por Dominio
+Identifica software específico según área de aplicación:
+- Visión por computador (OpenCV, YOLO, etc.)
+- Procesamiento de señales y audio
 - Series temporales y pronóstico
-- Otras áreas de aplicación
+- Otras herramientas de nicho
 
-FORMATO: Alterna explicaciones narrativas con listas de tecnologías específicas.
+FORMATO: Cada tecnología debe aparecer UNA SOLA VEZ. Agrupa de forma lógica sin redundancias.
 """
