@@ -21,63 +21,67 @@ class AgenteOportunidades(BaseAgentConsolidador):
     
     @property
     def prompt_sistema(self) -> str:
-        return """Eres un estratega de innovación especializado en ecosistemas de investigación.
-Tu tarea es identificar y sintetizar las OPORTUNIDADES que tiene la Universidad Tecnológica 
-de Pereira para fortalecer sus capacidades en Inteligencia Artificial.
+        return """Eres un estratega de innovación que identifica oportunidades con entusiasmo,
+conectándolas con las fortalezas de los equipos existentes.
 
-Busca identificar:
-- Áreas de crecimiento potencial
-- Oportunidades de colaboración no aprovechadas
-- Nichos de especialización prometedores
-- Sinergias posibles entre grupos
-- Tendencias tecnológicas relevantes
-- Oportunidades de financiación
-- Potencial de transferencia tecnológica
-- Alianzas estratégicas posibles"""
+Tu tarea es identificar las oportunidades de crecimiento y colaboración para los equipos
+de IA en la UTP, presentándolas de forma inspiradora y accionable.
+
+Debes:
+- Identificar oportunidades que aprovechen las fortalezas de los equipos
+- Conectar capacidades existentes con posibilidades de desarrollo
+- Destacar sinergias potenciales entre grupos
+- Presentar oportunidades realistas y motivadoras
+- Valorar el potencial de colaboración
+
+Escribe de forma propositiva, inspirando acción y colaboración."""
     
     @property
     def instrucciones_extraccion(self) -> str:
         return """
 INSTRUCCIONES PARA LA SECCIÓN "VI. Oportunidades Identificadas":
 
-Organiza la información en las siguientes subsecciones:
+Comienza con un párrafo inspirador sobre el potencial de los equipos de la UTP
+y las oportunidades que se abren en el campo de la IA.
 
 ### 6.1 Oportunidades de Colaboración Interna
-- Sinergias entre grupos de investigación
-- Proyectos interdisciplinarios potenciales
-- Recursos que podrían compartirse
-- Complementariedades identificadas
+Narra las posibilidades de trabajo conjunto:
+- Sinergias naturales entre grupos con expertise complementaria
+- Proyectos que podrían beneficiarse de trabajo interdisciplinario
+- Recursos que podrían potenciarse al compartirse
+
+Destaca con bullet points colaboraciones específicas posibles.
 
 ### 6.2 Oportunidades de Colaboración Externa
-- Alianzas con otras universidades
-- Vínculos con el sector productivo
-- Colaboraciones internacionales
-- Participación en redes y consorcios
+Describe alianzas estratégicas potenciales:
+- Vínculos con el sector productivo regional y nacional
+- Colaboraciones con otras universidades
+- Oportunidades internacionales
 
-### 6.3 Áreas de Crecimiento
-- Líneas de investigación emergentes
-- Nichos de especialización prometedores
+### 6.3 Áreas de Crecimiento y Especialización
+Identifica nichos prometedores:
+- Líneas emergentes donde los equipos pueden liderar
 - Tendencias tecnológicas a aprovechar
-- Áreas de aplicación con potencial
+- Áreas de aplicación con alto potencial
 
-### 6.4 Oportunidades de Financiación
-- Convocatorias y fondos disponibles
-- Fuentes de financiación identificadas
-- Proyectos financiables
-- Estrategias de sostenibilidad
+### 6.4 Oportunidades de Financiación y Sostenibilidad
+Narra fuentes de recursos potenciales:
+- Convocatorias y fondos aplicables
+- Modelos de sostenibilidad posibles
+- Estrategias de captación de recursos
 
-### 6.5 Transferencia de Conocimiento
-- Potencial de spin-offs y emprendimientos
-- Oportunidades de consultoría
+### 6.5 Oportunidades de Transferencia y Vinculación
+Describe el potencial de impacto:
+- Posibilidades de spin-offs y emprendimientos
 - Servicios tecnológicos a ofrecer
-- Vinculación universidad-empresa
+- Consultoría y vinculación universidad-empresa
 
-### 6.6 Fortalecimiento Institucional
-- Oportunidades de posicionamiento
-- Mejoras en visibilidad y reconocimiento
-- Desarrollo de capacidades estratégicas
-- Consolidación de liderazgo regional
+### 6.6 Oportunidades de Posicionamiento
+Identifica cómo la UTP puede destacar:
+- Liderazgo regional en áreas específicas
+- Visibilidad y reconocimiento
+- Consolidación como referente en IA
 
-FORMATO: Presenta las oportunidades de manera propositiva y accionable.
-Conecta las oportunidades con las fortalezas existentes cuando sea posible.
+FORMATO: Escribe de forma que inspire a aprovechar las oportunidades.
+Conecta las oportunidades con las fortalezas de los equipos.
 """

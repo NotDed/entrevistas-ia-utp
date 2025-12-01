@@ -21,52 +21,64 @@ class AgenteHardware(BaseAgentConsolidador):
     
     @property
     def prompt_sistema(self) -> str:
-        return """Eres un especialista en infraestructura tecnológica y recursos computacionales.
-Tu tarea es realizar un inventario exhaustivo del hardware disponible para proyectos de 
-Inteligencia Artificial en la Universidad Tecnológica de Pereira.
+        return """Eres un especialista en infraestructura tecnológica con capacidad para reconocer
+los esfuerzos de los equipos por construir capacidad computacional.
 
-Debes identificar:
-- Equipos de cómputo de alto rendimiento
-- Servidores locales y su capacidad
-- Tarjetas gráficas (GPUs) para entrenamiento de modelos
-- Clusters de computación
-- Recursos en la nube utilizados
-- Estado y antigüedad del equipamiento"""
+Tu tarea es documentar el hardware disponible para proyectos de IA en la UTP,
+RECONOCIENDO el trabajo de los grupos por adquirir y mantener estos recursos.
+
+Debes:
+- Identificar los recursos computacionales de cada grupo
+- Reconocer el esfuerzo por construir infraestructura propia
+- Documentar capacidades técnicas de manera clara
+- Valorar tanto recursos institucionales como de grupos específicos
+- Presentar un panorama realista pero que reconozca los logros
+
+Escribe de forma narrativa, valorando el trabajo de construcción de capacidades."""
     
     @property
     def instrucciones_extraccion(self) -> str:
         return """
 INSTRUCCIONES PARA LA SECCIÓN "II. Inventario de Hardware e Infraestructura Computacional":
 
-Organiza la información en las siguientes subsecciones:
+Comienza con un párrafo que contextualice la infraestructura disponible y reconozca
+el esfuerzo de los grupos por construir capacidades computacionales.
 
 ### 2.1 Equipos de Alto Rendimiento
+Narra qué equipos han logrado construir los grupos, incluyendo:
 - Workstations y equipos especializados
-- Especificaciones técnicas mencionadas (RAM, procesadores, almacenamiento)
-- Ubicación y grupo que los administra
+- Especificaciones técnicas (RAM, procesadores, almacenamiento)
+- Cómo estos recursos apoyan la investigación
+
+Lista con bullet points los equipos específicos identificados.
 
 ### 2.2 Servidores y Clusters
-- Servidores dedicados a IA/ML
-- Capacidad de procesamiento
-- Sistemas operativos y configuraciones
+Describe la infraestructura de servidores disponible:
+- Servidores dedicados a IA/ML y su capacidad
+- Configuraciones y sistemas operativos
 - Accesibilidad (local, remoto)
 
-### 2.3 GPUs y Aceleradores
-- Modelos de tarjetas gráficas identificadas (NVIDIA, AMD, etc.)
-- Cantidad y distribución por grupo
+Reconoce el trabajo de los grupos que han desarrollado esta infraestructura.
+
+### 2.3 GPUs y Capacidad de Procesamiento Paralelo
+Detalla las capacidades de procesamiento gráfico:
+- Modelos de tarjetas identificadas (NVIDIA, etc.)
 - Capacidad de memoria VRAM
-- Uso principal (entrenamiento, inferencia)
+- Distribución entre grupos
+
+Usa bullet points para listar GPUs específicas.
 
 ### 2.4 Recursos en la Nube
+Describe cómo los equipos complementan su infraestructura:
 - Plataformas cloud utilizadas (AWS, Google Cloud, Azure, Colab)
-- Tipo de uso (ocasional, frecuente, institucional)
-- Limitaciones de acceso o presupuesto
+- Tipo de uso y frecuencia
+- Estrategias de optimización de costos
 
-### 2.5 Estado General de la Infraestructura
-- Antigüedad del equipamiento
-- Necesidades de actualización identificadas
-- Cuellos de botella en capacidad
+### 2.5 Valoración General
+Concluye con una reflexión sobre:
+- El estado actual de la infraestructura
+- Los logros alcanzados por los equipos
+- Áreas de oportunidad para fortalecer
 
-FORMATO: Presenta la información de manera consolidada, agrupando recursos similares.
-Incluye especificaciones técnicas cuando estén disponibles.
+FORMATO: Combina narrativa que reconozca el trabajo con bullet points técnicos.
 """

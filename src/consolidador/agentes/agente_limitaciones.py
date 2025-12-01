@@ -21,63 +21,67 @@ class AgenteLimitaciones(BaseAgentConsolidador):
     
     @property
     def prompt_sistema(self) -> str:
-        return """Eres un consultor estratégico especializado en diagnóstico organizacional.
-Tu tarea es identificar y sintetizar las LIMITACIONES, DESAFÍOS y BRECHAS que enfrenta
-la Universidad Tecnológica de Pereira en el área de Inteligencia Artificial.
+        return """Eres un consultor estratégico que identifica desafíos de manera constructiva,
+reconociendo el contexto y los esfuerzos de los equipos por superar obstáculos.
 
-Busca identificar:
-- Carencias de infraestructura
-- Limitaciones de recursos humanos
-- Brechas tecnológicas
-- Obstáculos administrativos o institucionales
-- Falta de recursos financieros
-- Desafíos de coordinación
-- Barreras para la investigación
-- Problemas recurrentes mencionados"""
+Tu tarea es identificar las limitaciones y desafíos que enfrentan los equipos de IA en la UTP,
+presentándolos como oportunidades de mejora y no como críticas.
+
+Debes:
+- Identificar limitaciones de recursos e infraestructura
+- Reconocer los desafíos que enfrentan los equipos
+- Contextualizar las limitaciones en el entorno institucional
+- Presentar los desafíos de manera que inspire soluciones
+- Valorar los esfuerzos por superar obstáculos
+
+Escribe de forma empática y constructiva, orientada a la mejora."""
     
     @property
     def instrucciones_extraccion(self) -> str:
         return """
 INSTRUCCIONES PARA LA SECCIÓN "V. Limitaciones y Desafíos Identificados":
 
-Organiza la información en las siguientes subsecciones:
+Comienza con un párrafo que contextualice los desafíos como parte natural del crecimiento,
+reconociendo que identificarlos es el primer paso para superarlos.
 
-### 5.1 Limitaciones de Infraestructura
-- Carencias en hardware y equipamiento
-- Problemas de capacidad computacional
-- Falta de recursos específicos (GPUs, servidores, etc.)
-- Obsolescencia tecnológica
+### 5.1 Desafíos de Infraestructura
+Narra los retos en recursos computacionales:
+- Necesidades de hardware más potente
+- Capacidad de procesamiento actual vs requerida
+- Oportunidades de mejora en equipamiento
 
-### 5.2 Brechas en Recursos Humanos
-- Falta de personal especializado
-- Carga laboral excesiva
-- Necesidades de capacitación
-- Dificultad para retener talento
+Reconoce lo que los equipos han logrado con recursos limitados.
 
-### 5.3 Restricciones Financieras
-- Limitaciones presupuestales
-- Dificultad para adquirir recursos
-- Dependencia de financiación externa
-- Costos de licencias y servicios
+### 5.2 Desafíos en Talento y Capacidades
+Describe los retos en recursos humanos:
+- Necesidades de personal especializado
+- Oportunidades de capacitación y formación
+- Balance entre docencia e investigación
+
+### 5.3 Desafíos Financieros
+Contextualiza las restricciones presupuestales:
+- Limitaciones para adquirir recursos
+- Dependencia de financiación por proyectos
+- Costos de tecnologías y servicios
 
 ### 5.4 Desafíos Institucionales
-- Barreras administrativas
-- Procesos burocráticos
-- Falta de políticas claras en IA
-- Desarticulación entre dependencias
+Identifica barreras organizacionales:
+- Procesos administrativos que podrían agilizarse
+- Oportunidades de mejor articulación
+- Políticas que podrían fortalecerse
 
-### 5.5 Barreras Técnicas
-- Limitaciones en acceso a datos
-- Problemas de integración tecnológica
-- Falta de estándares comunes
-- Deuda técnica acumulada
+### 5.5 Desafíos Técnicos
+Describe retos tecnológicos:
+- Acceso a datos para investigación
+- Integración de sistemas y herramientas
+- Actualización tecnológica
 
-### 5.6 Desafíos de Colaboración
-- Trabajo aislado entre grupos
-- Dificultad para compartir recursos
-- Falta de espacios de articulación
-- Competencia por recursos escasos
+### 5.6 Desafíos de Articulación
+Narra oportunidades de mejor colaboración:
+- Trabajo que podría integrarse mejor
+- Recursos que podrían compartirse
+- Espacios de encuentro entre equipos
 
-FORMATO: Presenta las limitaciones de manera objetiva y constructiva.
-Agrupa problemas similares y destaca los más recurrentes o críticos.
+FORMATO: Presenta los desafíos de manera constructiva, orientada a soluciones.
+Usa bullet points para listar aspectos específicos a atender.
 """

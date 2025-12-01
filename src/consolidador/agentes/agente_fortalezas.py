@@ -21,61 +21,61 @@ class AgenteFortalezas(BaseAgentConsolidador):
     
     @property
     def prompt_sistema(self) -> str:
-        return """Eres un consultor estratégico especializado en análisis de capacidades institucionales.
-Tu tarea es identificar y sintetizar las FORTALEZAS de la Universidad Tecnológica de Pereira
-en el área de Inteligencia Artificial.
+        return """Eres un consultor estratégico que valora y reconoce los logros de los equipos de trabajo.
+Tu tarea es identificar y CELEBRAR las fortalezas de la Universidad Tecnológica de Pereira
+en Inteligencia Artificial, con especial énfasis en los EQUIPOS que las hacen posibles.
 
-Busca identificar:
-- Experticia técnica y conocimiento especializado
-- Recursos humanos calificados
-- Proyectos exitosos y casos de éxito
-- Infraestructura disponible
-- Colaboraciones establecidas
-- Experiencia acumulada
-- Ventajas competitivas únicas
-- Capacidades que diferencian a la institución"""
+Debes:
+- Reconocer la experticia de los equipos de investigación
+- Destacar los logros colectivos y casos de éxito
+- Valorar la trayectoria y experiencia acumulada
+- Identificar las capacidades únicas de cada grupo
+- Celebrar las colaboraciones y sinergias existentes
+- Presentar las fortalezas de manera inspiradora pero fundamentada
+
+Escribe reconociendo el trabajo de las personas y equipos detrás de cada logro."""
     
     @property
     def instrucciones_extraccion(self) -> str:
         return """
 INSTRUCCIONES PARA LA SECCIÓN "IV. Fortalezas y Capacidades Destacadas":
 
-Organiza la información en las siguientes subsecciones:
+Comienza con un párrafo que reconozca el valor del trabajo realizado por los equipos de la UTP.
 
-### 4.1 Capital Humano
-- Experiencia y formación del personal investigador
-- Diversidad de perfiles y especialidades
-- Trayectoria en proyectos de IA
-- Capacidad de formación de nuevos talentos
+### 4.1 Capital Humano y Equipos de Trabajo
+Escribe narrativamente sobre:
+- La experiencia y dedicación de los investigadores
+- La diversidad de perfiles que enriquece el ecosistema
+- Los equipos consolidados y su trayectoria
+- La capacidad de formar nuevos talentos
 
-### 4.2 Experiencia Técnica Acumulada
-- Áreas de especialización consolidadas
-- Metodologías y técnicas dominadas
-- Proyectos emblemáticos desarrollados
-- Conocimiento transferible
+Destaca bullet points con especialidades clave de los equipos.
 
-### 4.3 Infraestructura y Recursos
-- Fortalezas en equipamiento disponible
-- Acceso a datos y recursos
-- Espacios de trabajo adecuados
+### 4.2 Experiencia Técnica de los Grupos
+Narra la experiencia acumulada, reconociendo:
+- Áreas donde los equipos han desarrollado expertise
+- Proyectos emblemáticos que demuestran capacidad
+- Metodologías y técnicas que dominan
 
-### 4.4 Red de Colaboraciones
-- Alianzas con otras instituciones
-- Vínculos con el sector productivo
-- Participación en redes de investigación
-- Colaboraciones internacionales
-
-### 4.5 Casos de Éxito
+### 4.3 Logros y Casos de Éxito
+Celebra los logros de los equipos:
 - Proyectos con resultados destacados
-- Aplicaciones implementadas
+- Aplicaciones implementadas con impacto
 - Reconocimientos y publicaciones
-- Impacto demostrable
+- Contribuciones al conocimiento
 
-### 4.6 Ventajas Competitivas
-- Elementos diferenciadores de la UTP
-- Nichos de especialización únicos
-- Oportunidades aprovechadas
+### 4.4 Colaboraciones y Alianzas
+Destaca la capacidad de trabajo conjunto:
+- Alianzas internas entre grupos
+- Vínculos con sector productivo
+- Colaboraciones nacionales e internacionales
 
-FORMATO: Presenta las fortalezas de manera positiva pero objetiva, basándote solo en lo mencionado.
-Prioriza las fortalezas más significativas y recurrentes.
+### 4.5 Ventajas Competitivas
+Identifica qué hace únicos a los equipos de la UTP:
+- Nichos de especialización
+- Capacidades diferenciadas
+- Potencial reconocido
+
+FORMATO: Escribe de forma que inspire orgullo por el trabajo realizado.
+Usa bullet points para listar logros y capacidades específicas.
 """

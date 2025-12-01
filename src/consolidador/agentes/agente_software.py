@@ -21,54 +21,66 @@ class AgenteSoftware(BaseAgentConsolidador):
     
     @property
     def prompt_sistema(self) -> str:
-        return """Eres un experto en tecnologías de Inteligencia Artificial y Machine Learning.
-Tu tarea es catalogar el ecosistema completo de software, frameworks, bibliotecas y 
-herramientas utilizadas para proyectos de IA en la Universidad Tecnológica de Pereira.
+        return """Eres un experto en tecnologías de Inteligencia Artificial y Machine Learning,
+con capacidad para reconocer las decisiones técnicas de los equipos de trabajo.
 
-Debes identificar:
-- Lenguajes de programación predominantes
-- Frameworks de Machine Learning y Deep Learning
-- Bibliotecas especializadas
-- Plataformas de desarrollo y experimentación
-- Herramientas de gestión de datos
-- Software especializado por área de aplicación"""
+Tu tarea es documentar el ecosistema de software utilizado en la UTP,
+reconociendo las elecciones tecnológicas que han hecho los diferentes grupos.
+
+Debes:
+- Catalogar las tecnologías adoptadas por los equipos
+- Reconocer la diversidad de stacks tecnológicos
+- Valorar las decisiones técnicas y su fundamentación
+- Identificar patrones comunes y especializaciones
+- Presentar el panorama tecnológico de forma clara y organizada
+
+Escribe de forma narrativa, contextualizando las tecnologías con su uso."""
     
     @property
     def instrucciones_extraccion(self) -> str:
         return """
 INSTRUCCIONES PARA LA SECCIÓN "III. Ecosistema de Software y Herramientas":
 
-Organiza la información en las siguientes subsecciones:
+Comienza con un párrafo que presente la diversidad tecnológica del ecosistema de IA en la UTP.
 
 ### 3.1 Lenguajes de Programación
-- Lenguajes principales utilizados (Python, R, Julia, MATLAB, etc.)
-- Nivel de adopción en la comunidad
-- Casos de uso por lenguaje
+Narra cuáles son los lenguajes preferidos y por qué:
+- **Python** como lenguaje predominante y sus aplicaciones
+- Otros lenguajes utilizados (R, MATLAB, Julia, etc.)
+- Contextos de uso de cada lenguaje
 
-### 3.2 Frameworks de Machine Learning
-- Frameworks de Deep Learning (TensorFlow, PyTorch, Keras, etc.)
-- Bibliotecas de ML clásico (scikit-learn, XGBoost, etc.)
-- Preferencias y razones de adopción
+### 3.2 Frameworks de Machine Learning y Deep Learning
+Describe las herramientas de ML/DL adoptadas:
+- Frameworks principales: **TensorFlow**, **PyTorch**, **Keras**
+- Bibliotecas de ML clásico: scikit-learn, XGBoost
+- Razones de preferencia de los equipos
 
-### 3.3 Herramientas de Procesamiento de Datos
-- Bibliotecas de manipulación de datos (Pandas, NumPy, etc.)
+Usa bullet points para listar frameworks específicos.
+
+### 3.3 Herramientas de Datos y Visualización
+Explica cómo los equipos manejan sus datos:
+- Bibliotecas de manipulación (Pandas, NumPy)
 - Herramientas de visualización
 - Bases de datos utilizadas
 
-### 3.4 Plataformas y Entornos
-- Entornos de desarrollo (Jupyter, VS Code, etc.)
-- Plataformas de experimentación (MLflow, Weights & Biases, etc.)
+### 3.4 Plataformas y Entornos de Desarrollo
+Describe los ambientes de trabajo:
+- Entornos de desarrollo (Jupyter, VS Code)
+- Plataformas de experimentación
 - Herramientas de versionado y colaboración
 
-### 3.5 Software Especializado
-- Herramientas específicas por área (visión por computador, NLP, etc.)
-- Software propietario vs open source
-- APIs y servicios externos utilizados
-
-### 3.6 Modelos y Recursos Preentrenados
-- Modelos de lenguaje utilizados (GPT, BERT, LLaMA, etc.)
-- Repositorios de modelos (Hugging Face, etc.)
+### 3.5 Modelos y Recursos Preentrenados
+Detalla el uso de modelos existentes:
+- Modelos de lenguaje (GPT, BERT, LLaMA)
+- Repositorios utilizados (Hugging Face)
 - Estrategias de fine-tuning
 
-FORMATO: Agrupa las tecnologías por categoría, indicando nivel de uso cuando sea posible.
+### 3.6 Software Especializado por Área
+Identifica herramientas específicas según el dominio:
+- Visión por computador
+- Procesamiento de lenguaje natural
+- Series temporales y pronóstico
+- Otras áreas de aplicación
+
+FORMATO: Alterna explicaciones narrativas con listas de tecnologías específicas.
 """

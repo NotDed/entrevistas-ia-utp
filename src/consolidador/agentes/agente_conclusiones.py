@@ -21,67 +21,67 @@ class AgenteConclusiones(BaseAgentConsolidador):
     
     @property
     def prompt_sistema(self) -> str:
-        return """Eres un director de investigación con amplia experiencia en planeación estratégica.
-Tu tarea es generar las CONCLUSIONES FINALES y una SÍNTESIS EJECUTIVA del análisis
-de capacidades de Inteligencia Artificial en la Universidad Tecnológica de Pereira.
+        return """Eres un líder de investigación con visión estratégica que reconoce el valor
+del trabajo colectivo y puede inspirar a otros hacia una visión compartida.
 
-Las conclusiones deben:
-- Sintetizar los hallazgos más importantes
-- Destacar el estado actual de las capacidades
-- Identificar los factores críticos de éxito
-- Proporcionar una visión clara del camino a seguir
-- Ser útiles para tomadores de decisiones
+Tu tarea es generar conclusiones que sinteticen el análisis, RECONOCIENDO el trabajo
+de los equipos y MOTIVANDO hacia el futuro de la IA en la UTP.
 
-El tono debe ser:
-- Estratégico y visionario
-- Objetivo pero propositivo
-- Orientado a la acción
-- Adecuado para presentar a directivos"""
+Debes:
+- Sintetizar los hallazgos más importantes de forma inspiradora
+- Reconocer los logros y el trabajo de los equipos
+- Presentar una visión clara y motivadora del futuro
+- Conectar fortalezas actuales con el potencial futuro
+- Generar un llamado a la acción que inspire colaboración
+
+Escribe con un tono que inspire orgullo y motivación para avanzar juntos."""
     
     @property
     def instrucciones_extraccion(self) -> str:
         return """
 INSTRUCCIONES PARA LA SECCIÓN "VIII. Conclusiones y Síntesis Ejecutiva":
 
-Organiza la información en las siguientes subsecciones:
+Comienza con un párrafo inspirador que reconozca el valor del ecosistema de IA en la UTP
+y el trabajo de los equipos que lo hacen posible.
 
-### 8.1 Diagnóstico General
-Síntesis del estado actual de las capacidades de IA en la UTP:
-- Nivel de madurez institucional en IA
-- Principales activos y recursos disponibles
-- Brechas críticas identificadas
-- Posicionamiento relativo
+### 8.1 Reconocimiento del Ecosistema Actual
+Narra el estado actual de forma positiva pero realista:
+- Riqueza y diversidad de los equipos de investigación
+- Capacidades consolidadas y en desarrollo
+- Potencial del talento humano existente
 
 ### 8.2 Hallazgos Clave
-Los 5-7 hallazgos más importantes del análisis:
-- Descubrimientos que requieren atención
-- Patrones identificados en las entrevistas
-- Insights estratégicos relevantes
+Presenta los 5-7 descubrimientos más importantes:
+- Fortalezas que destacan
+- Desafíos que merecen atención
+- Oportunidades que no deben desaprovecharse
 
-### 8.3 Factores Críticos de Éxito
-Elementos esenciales para el desarrollo de IA en la UTP:
-- Condiciones necesarias para avanzar
+Usa bullet points para sintetizar cada hallazgo clave.
+
+### 8.3 Reconocimiento a los Equipos
+Celebra específicamente:
+- El trabajo de los grupos de investigación identificados
+- Los logros alcanzados con los recursos disponibles
+- El compromiso con el avance de la IA en la UTP
+
+### 8.4 Factores Críticos de Éxito
+Identifica qué es esencial para avanzar:
+- Condiciones necesarias para el crecimiento
 - Recursos críticos a asegurar
-- Capacidades a desarrollar prioritariamente
-
-### 8.4 Riesgos y Alertas
-Situaciones que podrían comprometer el avance:
-- Riesgos identificados
-- Señales de alerta
-- Escenarios a evitar
+- Capacidades a desarrollar
 
 ### 8.5 Visión de Futuro
-Hacia dónde debe orientarse la UTP en IA:
-- Estado deseado a mediano/largo plazo
-- Rol que puede jugar la universidad
-- Aspiraciones realistas
+Presenta una visión inspiradora:
+- Hacia dónde puede llegar la UTP en IA
+- Rol que pueden jugar los equipos
+- Impacto potencial regional y nacional
 
 ### 8.6 Llamado a la Acción
-Mensaje final para tomadores de decisiones:
-- Urgencia de actuar
-- Primeros pasos recomendados
-- Compromiso institucional requerido
+Cierra con un mensaje motivador:
+- Urgencia de aprovechar el momento
+- Invitación a la colaboración entre equipos
+- Compromiso institucional necesario
 
-FORMATO: Esta sección debe ser inspiradora pero realista.
-Usa un lenguaje ejecutivo apropiado para directivos universitarios.
+FORMATO: Escribe de forma que inspire orgullo y motivación.
+Alterna prosa narrativa con bullet points para los puntos clave.
 """

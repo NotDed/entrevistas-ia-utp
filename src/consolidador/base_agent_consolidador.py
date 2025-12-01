@@ -73,15 +73,24 @@ REGLAS IMPORTANTES:
 - NO hagas referencias explícitas a entrevistas específicas (ej: "en la entrevista 3...")
 - Sintetiza y agrupa la información de TODAS las entrevistas
 - Presenta los hallazgos como descubrimientos del análisis institucional
-- Usa lenguaje impersonal y profesional
 - Si múltiples fuentes mencionan lo mismo, preséntalo como hallazgo consolidado
 - Solo incluye información que SÍ fue mencionada, no inventes datos
 
+ESTILO DE REDACCIÓN - MUY IMPORTANTE:
+- Escribe de forma NARRATIVA y FLUIDA, como un informe profesional bien redactado
+- Alterna entre párrafos narrativos y bullet points estratégicos para facilitar la lectura
+- Los bullet points deben usarse para listas concretas (tecnologías, equipos, recursos), NO para todo el contenido
+- Desarrolla ideas en párrafos completos antes de usar listas
+- RECONOCE Y DESTACA los equipos de trabajo, grupos de investigación y comunidades
+- Menciona logros colectivos y capacidades de los equipos
+- Usa un tono profesional pero cercano, que valore el trabajo realizado
+- Usa **negritas** para términos clave y nombres de grupos/tecnologías
+
 FORMATO DE SALIDA:
 - Usa Markdown con jerarquía de encabezados (##, ###, ####)
-- Las viñetas (-) solo para items finales, NO para categorías
-- Usa **negritas** para términos clave
-- Mantén un tono formal de informe ejecutivo
+- Combina prosa narrativa con bullet points donde sea apropiado
+- Las viñetas (-) para listas concretas de items, tecnologías o recursos
+- Párrafos de 3-5 líneas para explicaciones y contexto
 
 {self.instrucciones_extraccion}
 
