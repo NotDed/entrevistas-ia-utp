@@ -5,9 +5,21 @@ Script principal del consolidador de infraestructura IA.
 Este script lee todas las transcripciones de entrevistas, las corrige
 y genera un reporte consolidado sobre la infraestructura de IA en la UTP.
 
+Usa múltiples agentes especializados para generar secciones específicas:
+- Grupos y Laboratorios
+- Hardware e Infraestructura
+- Software y Herramientas
+- Fortalezas
+- Limitaciones
+- Oportunidades
+- Propuestas y Recomendaciones
+- Conclusiones
+
 Uso:
-    python consolidador_main.py                    # Genera reporte consolidado
-    python consolidador_main.py --help             # Muestra ayuda
+    python -m src.consolidador.consolidador_main                    # Genera reporte consolidado
+    python -m src.consolidador.consolidador_main --paralelo         # Ejecución paralela (más rápido)
+    python -m src.consolidador.consolidador_main --sin-correccion   # Sin corrección de transcripciones
+    python -m src.consolidador.consolidador_main --help             # Muestra ayuda
 """
 import os
 import sys
@@ -21,7 +33,7 @@ from config import DATA_RAW_DIR, DATA_OUTPUTS_DIR
 from utils.file_loader import cargar_transcripcion, listar_transcripciones, extraer_nombre_entrevistado
 from utils.latex_generator import generar_latex_reporte, compilar_pdf
 from agents.agente_correccion import AgenteCorreccion
-from agente_consolidador import AgenteConsolidadorInfraestructura
+from integrador_consolidado import IntegradorConsolidado
 
 
 def corregir_transcripcion(transcripcion: str, agente_correccion: AgenteCorreccion) -> str:
@@ -265,13 +277,16 @@ def main():
     """Función principal del consolidador."""
     import argparse
     
-    parser = argparse.ArgumentParser(description="Consolidador de Infraestructura IA")
+    parser = argparse.ArgumentParser(description="Consolidador de Infraestructura IA - Multi-Agente")
     parser.add_argument("--sin-correccion", action="store_true", 
                        help="Saltar corrección de transcripciones (más rápido)")
+    parser.add_argument("--paralelo", action="store_true",
+                       help="Ejecutar agentes en paralelo (más rápido, puede causar rate limits)")
     args = parser.parse_args()
     
     print("\n" + "="*60)
     print("  CONSOLIDADOR DE INFRAESTRUCTURA IA - UTP")
+    print("  (Sistema Multi-Agente Especializado)")
     print("="*60)
     
     agente_correccion = None
@@ -293,20 +308,26 @@ def main():
         print(f"\nError: {e}")
         sys.exit(1)
     
-    # Crear agente consolidador
+    # Crear integrador de agentes consolidadores
     print("\n" + "-"*60)
-    print("Generando reporte consolidado...")
+    print("Generando reporte consolidado con agentes especializados...")
     print("-"*60)
     
-    agente = AgenteConsolidadorInfraestructura()
+    integrador = IntegradorConsolidado(verbose=True)
     
-    # Generar reporte consolidado
-    print("\n  Analizando información de todas las entrevistas...")
-    print("  (Esto puede tomar varios minutos)")
+    # Mostrar agentes que se ejecutarán
+    agentes_info = integrador.obtener_agentes()
+    print(f"\n  Agentes a ejecutar: {len(agentes_info)}")
+    for info in agentes_info:
+        print(f"    - {info['nombre']}")
+    
+    modo = "paralelo" if args.paralelo else "secuencial"
+    print(f"\n  Modo de ejecución: {modo}")
+    print("  (Esto puede tomar varios minutos)\n")
     
     try:
-        reporte_md = agente.ejecutar(transcripciones)
-        print("  ✓ Análisis completado")
+        reporte_md = integrador.procesar(transcripciones, paralelo=args.paralelo)
+        print("\n  ✓ Análisis completado")
     except Exception as e:
         print(f"\n  ✗ Error generando reporte: {e}")
         import traceback
