@@ -370,11 +370,14 @@ def guardar_latex_y_pdf(contenido_md: str, nombre_entrevistado: str,
     # Generar LaTeX
     latex = generar_latex_reporte(contenido_md, nombre_entrevistado, tipo)
     
-    # Nombres de archivo (simplificados sin nombre del entrevistado)
+    # Limpiar nombre para usar en archivo (reemplazar espacios y caracteres especiales)
+    nombre_limpio = nombre_entrevistado.replace(" ", "_").replace("/", "-")
+    
+    # Nombres de archivo con nombre del entrevistado/departamento
     if tipo == "narrativo":
-        nombre_base = "perfil"
+        nombre_base = f"perfil_{nombre_limpio}"
     else:
-        nombre_base = "reporte"
+        nombre_base = f"reporte_{nombre_limpio}"
     
     ruta_tex = os.path.join(output_dir, f"{nombre_base}.tex")
     
